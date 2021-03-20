@@ -40,6 +40,7 @@ func main() {
 			}
 			fmt.Printf("I am %s\n", saEmail)
 		}
+		fmt.Println()
 	}
 }
 
