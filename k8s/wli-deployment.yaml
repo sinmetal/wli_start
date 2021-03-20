@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wli-dep
+  labels:
+    app: wli-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wli-dep
+  template:
+    metadata:
+      labels:
+        app: wli-dep
+    spec:
+      containers:
+        - name: wli-dep
+          image: asia-northeast1-docker.pkg.dev/$PROJECT_ID/wli/$BRANCH_NAME:$COMMIT_SHA
+
