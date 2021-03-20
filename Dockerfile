@@ -1,5 +1,3 @@
-FROM alpine:3.12
-RUN apk add --no-cache ca-certificates
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk:latest
 COPY ./wli_start /wli_start
 ENTRYPOINT ["/wli_start"]
