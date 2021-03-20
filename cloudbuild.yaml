@@ -13,7 +13,7 @@ steps:
       - set
       - image
       - deployment/wli-dep
-      - wli-dep=gcr.io/$PROJECT_ID/sinmetal/wli/$BRANCH_NAME:$COMMIT_SHA
+      - wli-dep=asia-northeast1-docker.pkg.dev/$PROJECT_ID/wli/$BRANCH_NAME:$COMMIT_SHA
       - --namespace=metalapps
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast1-b'
