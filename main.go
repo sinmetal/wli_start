@@ -19,23 +19,32 @@ func main() {
 	for {
 		time.Sleep(3 * time.Second)
 
-		token, err := getServiceAccountToken(ctx)
-		if err != nil {
-			fmt.Printf("failed getServiceAccountToken : %s\n", err)
+		{
+			token, err := getMetadata(ctx, "/computeMetadata/v1/instance/service-accounts/default/token")
+			if err != nil {
+				fmt.Printf("failed getServiceAccountToken : %s\n", err)
+			}
+			fmt.Printf("SAToken : %s\n", token)
 		}
-		fmt.Printf("SAToken : %s\n", token)
-
-		saEmail, err := metadata.Email("")
-		if err != nil {
-			log.Fatal(ctx, err.Error())
+		{
+			saEmail, err := getMetadata(ctx, "/computeMetadata/v1/instance/service-accounts/default/email")
+			if err != nil {
+				fmt.Printf("failed getServiceAccountToken : %s\n", err)
+			}
+			fmt.Printf("Email from Token : %s\n", saEmail)
 		}
-		fmt.Printf("I am %s\n", saEmail)
+		{
+			saEmail, err := metadata.Email("")
+			if err != nil {
+				log.Fatal(ctx, err.Error())
+			}
+			fmt.Printf("I am %s\n", saEmail)
+		}
 	}
-
 }
 
-func getServiceAccountToken(ctx context.Context) (string, error) {
-	req, err := http.NewRequest(http.MethodGet, "http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token", nil)
+func getMetadata(ctx context.Context, metadata string) (string, error) {
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("http://169.254.169.254%s", metadata), nil)
 	if err != nil {
 		return "", fmt.Errorf("failed getServiceAccountToken http.NewRequest : %w", err)
 	}
